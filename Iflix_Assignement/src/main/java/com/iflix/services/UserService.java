@@ -1,47 +1,42 @@
 package main.java.com.iflix.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import main.java.com.iflix.model.User;
 import main.java.com.iflix.model.UserList;
-import main.java.com.iflix.util.Constants;
+import main.java.com.iflix.services.IUserService;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
-public class UserService {
-	private final static Logger LOGGER = Logger.getLogger(UserService.class);
+public class UserService implements IUserService {
 	
-	private String PROJECT_PATH;
+	private String filePath;
 
     // Constructor
-    public UserService() {
-        PROJECT_PATH = System.getProperty("user.dir");
+    public UserService(String filePath) {
+        this.filePath = filePath;
     }
 
-    /**
-     * getUsers
-     *
-     * @return List<User>
-     */
-    public List<User> getUsers() {
+    public List<User> getAllUsers() throws Exception {
+    	
+    	 List<User> userList = null;
 
-        List<User> userList = null;
+         try {
 
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            UserList users = objectMapper.readValue(new File(PROJECT_PATH + Constants.USER.DATA_LOCATION), UserList.class);
-            if (users != null && users.getUsers() != null) {
-                userList = users.getUsers();
-            }
-        } catch (IOException e) {
-            LOGGER.error("Error occurred in UserService: getUsers() : Error[" + e + "]");
+             ObjectMapper objectMapper = new ObjectMapper();
 
-        }
+             UserList users = objectMapper.readValue(new File(filePath), UserList.class);
 
-        return userList;
+             if (users != null && users.getUsers() != null) {
+                 userList = users.getUsers();
+             }
+
+         } catch (Exception e) {
+             throw e;
+         }
+
+         return userList;
 
     }
 }

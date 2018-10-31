@@ -7,6 +7,11 @@ public class IflixException extends Exception{
 	public String exceptionCode;
 	
 	public String customMsg ;
+	
+	public IflixException(String msg)
+	{
+		customMsg = msg;
+	}
 
 	public String getGeoID() {
 		return geoID;
