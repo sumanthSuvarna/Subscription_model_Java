@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Revocation implements Serializable {
+public class Revocation implements Serializable, Comparable<Revocation> {
 
     private String partner;
     private long number;
@@ -61,4 +61,8 @@ public class Revocation implements Serializable {
                 '}';
     }
 
+    @Override
+    public int compareTo(Revocation o) {
+      return getDate().compareTo(o.getDate());
+    }
 }

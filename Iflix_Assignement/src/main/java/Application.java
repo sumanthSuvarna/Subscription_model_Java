@@ -16,9 +16,12 @@ public class Application {
 	
 	public static void main(String[] args) {
 		String typeOfProcessor = Constants.MAIN.FILE_PROCESSOR_TYPE;
+		
 		FileFormModel iModel = new FileFormModel();
 		iModel.setSourceFileName(Constants.USER.DATA_LOCATION);
 		iModel.setDestFileName(Constants.OUTPUT.FILE_LOCATION);
+		String partnerArray[] = {Constants.PARTNER_PATH.AMAZECOM, Constants.PARTNER_PATH.WONDERTEL};		
+		iModel.setPartnerFileNames(partnerArray);
 						
 		try 
 		{

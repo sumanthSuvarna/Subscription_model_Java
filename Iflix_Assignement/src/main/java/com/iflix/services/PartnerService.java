@@ -9,65 +9,40 @@ import org.apache.log4j.Logger;
 
 import java.io.File;
 
-public class PartnerService {
+public class PartnerService implements IPartnerService{
 
-    private final static Logger LOGGER = Logger.getLogger(PartnerService.class);
+    private String filePath;
 
-    private String PROJECT_PATH;
-
-    public PartnerService() {
-        PROJECT_PATH = System.getProperty("user.dir");
+    // Constructor
+    public PartnerService(String filePath) {
+        this.filePath = filePath;
     }
 
-    /**
-     * getPartnerData
-     *
-     * @param partnerName String
-     * @return Partner
-     */
-    public Partner getPartnerData(String partnerName) {
-
-        Partner partner = null;
-
-        if (partnerName != null && !partnerName.isEmpty()) {
-            try {
-
-                String partnerDataLocation = getPartnerDataLocationByName(partnerName);
-
-                ObjectMapper objectMapper = new ObjectMapper();
-
-                partner = objectMapper.readValue(new File(PROJECT_PATH + partnerDataLocation), Partner.class);
-                partner.setName(partnerName);
-            } catch (Exception e) {
-
-                LOGGER.error("Error occurred in PartnerService: getPartnerData() : Error[" + e + "]");
-
-            }
-        }
-
-
-        return partner;
-
-    }
-
-    /**
-     * getPartnerDataLocationByName
-     *
-     * @param partnerName String
-     * @return String
-     * @throws InvalidPartnerException e
-     */
-    private String getPartnerDataLocationByName(String partnerName) throws InvalidPartnerException {
-
-        switch (partnerName) {
-            case Constants.PARTNER.AMAZECOM:
-                return Constants.PARTNER_PATH.AMAZECOM;
-            case Constants.PARTNER.WONDERTEL:
-                return Constants.PARTNER_PATH.WONDERTEL;
-            default:
-                throw new InvalidPartnerException();
-        }
-
-    }
+	public Partner getPartnerData() throws Exception {
+	
+	    Partner partner = null;
+	
+	    if (filePath != null && !filePath.isEmpty()) {
+	        try {
+	
+	            ObjectMapper objectMapper = new ObjectMapper();
+	            File partnerFile = new File(filePath);
+	            String partnerName = partnerFile.getName().split("\\.")[0];
+	            //String partnerName = partnerFileName; //todo : do filename from filepath without extension
+	            
+	            
+	            partner = objectMapper.readValue(partnerFile, Partner.class);
+	            partner.setName(partnerName);
+	        } catch (Exception e) {
+	
+	            throw e;
+	
+	        }
+	    }
+	
+	
+	    return partner;
+	
+	}
 
 }

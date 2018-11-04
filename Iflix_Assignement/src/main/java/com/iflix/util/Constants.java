@@ -11,16 +11,20 @@ public class Constants {
 	}
 
     public interface USER {
-        String DATA_LOCATION = "/data/accounts.json";
+
+		String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+        String DATA_LOCATION =  ProjectDir + "\\data\\accounts.json"; // "$ProjectDir/data/accounts.json";
     }
 
     public interface OUTPUT {
-        String FILE_LOCATION = "/output/result.json";
+    	String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+        String FILE_LOCATION = ProjectDir + "\\output\\result.json"; //"$ProjectDir/output/result.json";
     }
 
     public interface PARTNER_PATH {
-        String AMAZECOM = "/data/amazecom.json";
-        String WONDERTEL = "/data/wondertel.json";
+    	String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+        String AMAZECOM = ProjectDir + "\\data\\amazecom.json"; //"$ProjectDir/data/amazecom.json";
+        String WONDERTEL = ProjectDir + "\\data\\wondertel.json"; //"$ProjectDir/data/wondertel.json";
     }
 
     public interface PARTNER {

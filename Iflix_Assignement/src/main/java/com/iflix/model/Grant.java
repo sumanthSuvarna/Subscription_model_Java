@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Grant implements Serializable {
+public class Grant implements Serializable, Comparable<Grant> {
 
     private String partner;
     private long number;
@@ -79,6 +79,11 @@ public class Grant implements Serializable {
                 ", date=" + date +
                 ", period=" + period +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Grant o) {
+      return getDate().compareTo(o.getDate());
     }
 
 }

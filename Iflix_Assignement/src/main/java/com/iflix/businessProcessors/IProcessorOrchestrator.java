@@ -5,6 +5,6 @@ import main.java.com.iflix.model.form.IFormModel;
 
 public interface IProcessorOrchestrator {
 
-	public boolean Process(IFormModel iModel) throws IflixException;
+	public boolean Process(IFormModel iModel) throws IflixException, Exception;
 	
 }
