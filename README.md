@@ -7,3 +7,4 @@ Application.java (main fucntion)
                               |-----------------------------PartnerService (to get partner accounts)
                               |-----------------------------SubscriptionService (to get subscriptions)
                               |-----------------------------WriterService (to write output)
+                              
