@@ -8,3 +8,5 @@ Application.java (main fucntion)
                               |-----------------------------SubscriptionService (to get subscriptions)
                               |-----------------------------WriterService (to write output)
                               
+                              
+                              
