@@ -1,7 +1,7 @@
 # java_assignment
 Code assignment. Developer : Sumanth Suvarna,
 
-Application.java (main fucntion) <br\>
+Application.java (main fucntion) 
        |---FileProcessorOrchestrator (chosen based on Factory pattern)
                     |---UserService (to get user accounts)
                     |---PartnerService (to get partner accounts)
