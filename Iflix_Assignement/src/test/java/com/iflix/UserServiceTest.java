@@ -15,15 +15,28 @@ import main.java.com.iflix.util.Constants;
 
 public class UserServiceTest {
 
-	@Test
-	public void testGetAllUsers() {
+	@Test(expected = RuntimeException.class)
+	public void testGetAllUsers() throws Exception {
 		
-		/*
+
 		//Arrange, Execute and Assert
+		IflixException ex = new IflixException("Invalid File");
 		IUserService userService = new UserService("C:\\ttt\test.json");
-		Aseert.ExpectsExceptionWithMessage(userService.getAllUsers(), IflixException ex, Constants.USER_SERVICE_MESSAGE.INVALID_FILE_PATH, ex.customMsg);
 		
+		try {
+			List<User> userList = userService.getAllUsers();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			e.getMessage();
+		    String message = "Employee ID is null";
+		    assertEquals(message, e.getMessage());
+		   throw e;
+		}
+		fail("Employee Id Null exception did not throw");
+		//Assert.assertEquals(List<User> userList, userService.getAllUsers());
+		//ExpectsExceptionWithMessage(userService.getAllUsers(),  ex, Constants.USER_SERVICE_MESSAGE.INVALID_FILE_PATH, ex.customMsg);
 		
+		/*	
 		IUserService userService = new UserService("sfdjskfkjfkejf");
 		Aseert.ExpectsExceptionWithMessage(userService.getAllUsers(), IflixException ex, Constants.USER_SERVICE_MESSAGE.INVALID_FILE_PATH, ex.customMsg);
 	

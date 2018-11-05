@@ -1,4 +1,4 @@
-package main.java.com.iflix.test;
+package test.java.com.iflix;
 
 public class APIProcessorTestForFuture {
 

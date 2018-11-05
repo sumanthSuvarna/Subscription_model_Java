@@ -37,6 +37,4 @@ public class IflixException extends Exception{
 		this.customMsg = customMsg;
 	}
 	
-	
-	
 }
