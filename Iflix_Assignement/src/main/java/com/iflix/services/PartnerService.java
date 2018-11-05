@@ -11,14 +11,7 @@ import java.io.File;
 
 public class PartnerService implements IPartnerService{
 
-    private String filePath;
-
-    // Constructor
-    public PartnerService(String filePath) {
-        this.filePath = filePath;
-    }
-
-	public Partner getPartnerData() throws Exception {
+	public Partner getPartnerData(String filePath) throws Exception {
 	
 	    Partner partner = null;
 	

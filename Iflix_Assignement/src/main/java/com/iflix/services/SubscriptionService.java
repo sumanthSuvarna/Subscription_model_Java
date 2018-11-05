@@ -14,17 +14,8 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 public class SubscriptionService implements ISubscriptionService {
-	
-	private List<User> userList;
-	private List<Partner> partnerList;
-	
-	public SubscriptionService(List<User> userList, List<Partner> partnerList)
-	{
-		this.userList = userList;
-		this.partnerList = partnerList;
-	}
 
-    public JSONObject getSubscriptionJsonObject() {
+    public JSONObject getSubscriptionJsonObject(List<User> userList, List<Partner> partnerList) {
 
         JSONObject outputJsonObject = new JSONObject();
         JSONArray subscriptionJson = new JSONArray();
@@ -32,7 +23,7 @@ public class SubscriptionService implements ISubscriptionService {
         for (User user : userList) {
 
             // Calculate subscription
-            JSONObject userSubscription = doSubscriptionProcessing(user);
+            JSONObject userSubscription = doSubscriptionProcessing(user, userList, partnerList);
 
             if (userSubscription != null) {
                 subscriptionJson.put(userSubscription);
@@ -45,9 +36,9 @@ public class SubscriptionService implements ISubscriptionService {
         return outputJsonObject;
     }
     
-    private JSONObject doSubscriptionProcessing(User user) {
+    private JSONObject doSubscriptionProcessing(User user, List<User> userList, List<Partner> partnerList) {
 
-        AllUserSubscription allUserSubscription = getSubscriptionForUser(user);
+        AllUserSubscription allUserSubscription = getSubscriptionForUser(user, partnerList);
         // Sorted Grants List For users 
         List<Grant> grantList = allUserSubscription.getGrantList();
         //Sorted Revocation List For users 
@@ -192,7 +183,7 @@ public class SubscriptionService implements ISubscriptionService {
 
     }
 
-    private AllUserSubscription getSubscriptionForUser(User user) {
+    private AllUserSubscription getSubscriptionForUser(User user, List<Partner> partnerList) {
 
         AllUserSubscription allUserSubscription = new AllUserSubscription();
         allUserSubscription.setName(user.getName());

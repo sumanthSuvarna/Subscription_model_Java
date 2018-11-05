@@ -1,77 +1,95 @@
 package test.java.com.iflix;
 
-import static org.junit.Assert.*;
-
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
-import main.java.com.iflix.exceptions.IflixException;
+import com.fasterxml.jackson.core.JsonParseException;
+
 import main.java.com.iflix.model.User;
 import main.java.com.iflix.services.IUserService;
 import main.java.com.iflix.services.UserService;
-import main.java.com.iflix.util.Constants;
 
-public class UserServiceTest {
+public class UserServiceTest extends BaseTest {
+	
+	
+	@Rule
+	public ExpectedException expectedEx = ExpectedException.none();
 
-	@Test(expected = RuntimeException.class)
-	public void testGetAllUsers() throws Exception {
-		
-
-		//Arrange, Execute and Assert
-		IflixException ex = new IflixException("Invalid File");
-		IUserService userService = new UserService("C:\\ttt\test.json");
-		
-		try {
-			List<User> userList = userService.getAllUsers();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			e.getMessage();
-		    String message = "Employee ID is null";
-		    assertEquals(message, e.getMessage());
-		   throw e;
-		}
-		fail("Employee Id Null exception did not throw");
-		//Assert.assertEquals(List<User> userList, userService.getAllUsers());
-		//ExpectsExceptionWithMessage(userService.getAllUsers(),  ex, Constants.USER_SERVICE_MESSAGE.INVALID_FILE_PATH, ex.customMsg);
-		
-		/*	
-		IUserService userService = new UserService("sfdjskfkjfkejf");
-		Aseert.ExpectsExceptionWithMessage(userService.getAllUsers(), IflixException ex, Constants.USER_SERVICE_MESSAGE.INVALID_FILE_PATH, ex.customMsg);
-	
-		
-		IUserService userService = new UserService("C:\\djdjd.json");
-		Aseert.ExpectsExceptionWithMessage(userService.getAllUsers(), IflixException ex, Constants.USER_SERVICE_MESSAGE.INCORRECT_JSON_FORMAT, ex.customMsg);
-	
-		
-		//Arrange
-		IList<User> expected = new List<Users>();
-		String validFileName = "C:\\valid.json";
-		//Execute
-		IUserService userService = new UserService("C:\\valid.json");
-		IList<Users> usersActual =   userService.getAllUsers();
-		//Assert
-		Assert.AreEqual(usersActual, usersExpected );
-		
-		
-		
-		//MockService.Mock(IList<Users>
-		
-		//Arrange
-			/*	IList<User> expected = new List<Users>();
-				String validFileName = "C:\\valid.json";
-				//Execute
-				IUserService userService = new UserService("C:\\valid.json");
-				IMockObject = new MockObject<UserService>().whenExecute.GetAllUsers().returnMe(new Users() list );
-				IList<Users> usersActual = IMockObject.getAllUsers();
-				//Assert
-				Assert.AreEqual(usersActual, usersExpected );*/
-	
-		
-		
-		//fail("Not yet implemented");*/
+	@Test
+	public void testGetAllUsersForWrongFilePath() throws Exception {
+	    expectedEx.expect(FileNotFoundException.class);
+		IUserService userService = new UserService();
+		userService.getAllUsers("test.json");
 	}
 	
+	@Test
+	public void testWrongJSONFile()throws Exception { 
+		expectedEx.expect(JsonParseException.class);
+		IUserService userService = new UserService();
+		userService.getAllUsers("pom.xml");
+	}
+	
+	// Similarily you could test for IOException and JSONMapping Exception.
+	
+	@Test
+	public void testCorrectFile() { 
+		
+		//Arrange
+		String fileName = "users1.json";
+		String contents = "{\r\n" + 
+				"  \"users\": [\r\n" + 
+				"    {\r\n" + 
+				"      \"number\": \"45875660609\",\r\n" + 
+				"      \"name\": \"John\"\r\n" + 
+				"    },\r\n" + 
+				"    {\r\n" + 
+				"      \"number\": \"49509330262\",\r\n" + 
+				"      \"name\": \"Jenny\"\r\n" + 
+				"    }\r\n" + 
+				"  ]\r\n" + 
+				"}";			
+		super.createFile(fileName, contents);		
+		String path = super.GetFileWithPath(fileName);
+		
+		List<User> expectedList = new ArrayList<>();
+		User usr = new User();
+		usr.setName("John");
+		usr.setNumber(45875660609L);
+		expectedList.add(usr);
+		usr = new User();
+		usr.setName("Jenny");
+		usr.setNumber(49509330262L);
+		expectedList.add(usr);
+		
+		//Act and Assert
+		try{
+			IUserService userService = new UserService();
+			List<User> actualList =   userService.getAllUsers(path);
+			Assert.assertEquals(expectedList.size(), actualList.size());			
+			Assert.assertEquals(expectedList.get(0).getName(), actualList.get(0).getName());
+			Assert.assertEquals(expectedList.get(1).getName(), actualList.get(1).getName());
+			Assert.assertEquals(expectedList.get(0).getNumber(), actualList.get(0).getNumber());
+			Assert.assertEquals(expectedList.get(1).getNumber(), actualList.get(1).getNumber());			
+			
+			// Check if the account number is of 11 Digit
+			for(User user: expectedList) {
+				if(String.valueOf(user.getNumber()).length()!=11) {
+					Assert.fail("Account Number :"+user.getNumber()+" for user: "+user.getName()+" is invalid");
+				}
+			}
+						
+			//Assert.assertFalse("Invalid Account Number", condition);
+		}
+		catch(Exception ex){
+			Assert.fail("Exception while calling userlist or some error");
+		}
+		super.tearDown();
+	}
 
 }

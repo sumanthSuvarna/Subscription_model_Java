@@ -4,6 +4,6 @@ import main.java.com.iflix.model.Partner;
 
 public interface IPartnerService {
 	
-	Partner getPartnerData() throws Exception;
+	Partner getPartnerData(String filePath) throws Exception;
 
 }

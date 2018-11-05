@@ -10,15 +10,8 @@ import java.io.File;
 import java.util.List;
 
 public class UserService implements IUserService {
-	
-	private String filePath;
 
-    // Constructor
-    public UserService(String filePath) {
-        this.filePath = filePath;
-    }
-
-    public List<User> getAllUsers() throws Exception {
+    public List<User> getAllUsers(String filePath) throws Exception {
     	
     	 List<User> userList = null;
 

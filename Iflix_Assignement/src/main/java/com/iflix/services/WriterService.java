@@ -6,17 +6,14 @@ import org.json.JSONObject;
 
 public class WriterService implements IWriterService{
 	
-	private String filePath;
-	
-	public WriterService(String path) {
-		this.filePath = path;
+	public WriterService() {
+		
 	}
 
-	@Override
-	public void writeDataToOutputFile(JSONObject outputJsonObject) throws Exception {
+	public void writeDataToOutputFile(String path, JSONObject outputJsonObject) throws Exception {
 		try {
 
-            try (FileWriter file = new FileWriter(filePath)) {
+            try (FileWriter file = new FileWriter(path)) {
 
                 file.write(outputJsonObject.toString());
 

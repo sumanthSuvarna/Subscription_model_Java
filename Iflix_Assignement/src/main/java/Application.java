@@ -15,6 +15,9 @@ public class Application {
 	private final static Logger LOGGER = Logger.getLogger(Application.class);
 	
 	public static void main(String[] args) {
+		
+		System.out.println("Iflix application begins");
+		
 		String typeOfProcessor = Constants.MAIN.FILE_PROCESSOR_TYPE;
 		
 		FileFormModel iModel = new FileFormModel();
@@ -41,6 +44,8 @@ public class Application {
 		finally {
 					
 		}
+		
+		System.out.println("Iflix application ends..");
 	}
 	
 	/*

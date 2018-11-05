@@ -7,22 +7,22 @@ public class Constants {
 		String DATABASE_PROCESSOR_TYPE = "DATABASEPROCESSOR";
 		String API_PROCESSOR_TYPE = "APIPROCESSOR";
 		
-		String LOGGING_PATH = "$ProjectDir/out[put/error.log";
+//		String LOGGING_PATH = "$ProjectDir/out[put/error.log";
 	}
 
     public interface USER {
 
-		String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+		String ProjectDir =  System.getProperty("user.dir");;
         String DATA_LOCATION =  ProjectDir + "\\data\\accounts.json"; // "$ProjectDir/data/accounts.json";
     }
 
     public interface OUTPUT {
-    	String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+    	String ProjectDir =  System.getProperty("user.dir");;
         String FILE_LOCATION = ProjectDir + "\\output\\result.json"; //"$ProjectDir/output/result.json";
     }
 
     public interface PARTNER_PATH {
-    	String ProjectDir = "D:\\workspace\\Test\\java_assignment\\Iflix_Assignement\\";
+    	String ProjectDir = System.getProperty("user.dir");
         String AMAZECOM = ProjectDir + "\\data\\amazecom.json"; //"$ProjectDir/data/amazecom.json";
         String WONDERTEL = ProjectDir + "\\data\\wondertel.json"; //"$ProjectDir/data/wondertel.json";
     }
